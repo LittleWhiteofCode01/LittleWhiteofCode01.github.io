@@ -2,23 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Gridea</title>
+<title>java实现复制文件目录及文件到指定路径下 | Gridea</title>
 <link rel="shortcut icon" href="https://LittleWhiteofCode01.github.io/favicon.ico?v=1606379421729">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://LittleWhiteofCode01.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Gridea - Atom Feed" href="https://LittleWhiteofCode01.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="java实现复制文件目录及文件到指定路径下 | Gridea - Atom Feed" href="https://LittleWhiteofCode01.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
-
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
+    <meta name="description" content="import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.util.Scanner;
+import java.io.*;
+public clas..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -81,46 +78,105 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              java实现复制文件目录及文件到指定路径下
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-11-26
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <pre><code>import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.util.Scanner;
+import java.io.*;
+public class Copy{
+    public static void main(String[] args) throws IOException {
+    Scanner sc =new Scanner(System.in);
+    // 指定数据源
+	System.out.println(&quot;请输入数据源&quot;);
+	String str1 = sc.nextLine();
+	File source = new File(str1);
+	
+    // 指定目的地
+	System.out.println(&quot;请输入目的地&quot;);
+	String dest = sc.nextLine(); 
+	copyFile(source,dest);
+}
+public static void copyFile(File source,String dest )throws IOException{
+	//创建目的地文件夹
+	File destfile = new File(dest);
+	if(!destfile.exists()){
+		destfile.mkdir();
+	}
+	//如果source是文件夹，则在目的地址中创建新的文件夹
+	if(source.isDirectory()){
+		File file = new File(dest+&quot;\\&quot;+source.getName());//用目的地址加上source的文件夹名称，创建新的文件夹
+		file.mkdir();
+		//得到source文件夹的所有文件及目录
+		File[] files = source.listFiles();
+		if(files.length==0){
+			return;
+		}else{
+			for(int i = 0 ;i&lt;files.length;i++){
+				copyFile(files[i],file.getPath());
+			}
+		}
+		
+	}
+	//source是文件，则用字节输入输出流复制文件
+	else if(source.isFile()){
+		FileInputStream fis = new FileInputStream(source);
+		//创建新的文件，保存复制内容，文件名称与源文件名称一致
+		File dfile = new File(dest+&quot;\\&quot;+source.getName());
+		if(!dfile.exists()){
+			dfile.createNewFile();
+		}
+		
+		FileOutputStream fos = new FileOutputStream(dfile);
+			// 读写数据
+			// 定义数组
+			byte[] b = new byte[1024];
+			// 定义长度
+			int len;
+			// 循环读取
+			while ((len = fis.read(b))!=-1) {
+				// 写出数据
+				fos.write(b, 0 , len);
+			}
+
+			//关闭资源
+			fos.close();
+			fis.close();
+		
+	}
+}
+</code></pre>
+<p>}</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://LittleWhiteofCode01.github.io/post/124/">
+              <h3 class="post-title">
+                124
+              </h3>
+            </a>
+          </div>
         
 
         
